@@ -25,6 +25,12 @@ Singleton {
 
     readonly property bool hasWallpaper: root.path !== ""
 
+    // 候选列表对外的两个口子：选择器拿 files 当 model，
+    // 轮换和张数统计拿 count。内部那个 id 出不了这个文件，
+    // 不把它们挂到根上，外面读到的就是 undefined —— 既不报错也不显示。
+    readonly property alias files: fileList
+    readonly property alias count: fileList.count
+
     function set(p: string) {
         Config.setWallpaper(p);
     }
