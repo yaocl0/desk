@@ -39,8 +39,12 @@ source = ~/workspace/desk/hypr/desk.conf
 
 ```
 shell.qml                入口 + 布局注册表
+ring.qml                 环形启动器的独立预览入口（单独调环，不重载整个 shell）
+lock.qml                 锁屏的独立预览入口（普通 Overlay，锁不住，只验手感和 PAM）
 config.json              { "theme": "gruvbox", "layout": "topbar" }
-hypr/desk.conf           Hyprland layerrule + 自启动
+hypr/desk.conf           Hyprland layerrule + 自启动（老式 .conf 配置）
+hypr/desk.lua            同上，给 Lua 配置用（configProvider: lua），两者二选一
+hypr/desk-lock.sh        锁屏入口：够不着 desk 就 exec hyprlock —— 失败不能是「不锁」
 core/                    shell 自身的配置与样式解析
   Defaults.qml    [S]    内置 token 兜底树（中性灰，一眼看出主题没加载上）
   Config.qml      [S]    config.json 读写 + 热重载
@@ -49,10 +53,12 @@ core/                    shell 自身的配置与样式解析
   WallpaperRotator.qml   定时换下一张（wallpaperInterval 分钟）
   Matugen.qml            换壁纸 → 重算 material 配色
   LauncherState.qml [S]  启动器开没开、开在哪块屏（IPC 与窗口层的交汇点）
+  LockState.qml   [S]    锁屏状态 + PAM 认证（service 用 login，注意 pam_faillock）
   Ipc.qml                qs ipc call style / wallpaper / launcher …
 themes/
   gruvbox.json           极简单色：直角、不透明、无动画
   glass.json             macOS 风：贴边方角菜单栏、比例字体、系统蓝 accent
+  material.json          壁纸取色：matugen 按当前壁纸重算，见「壁纸取色」一节
   pastel.json            彩色药丸条：栏底近全透、大号粗体、每个组件一个色
 ui/                      样式原语 —— 唯一读 Style 的层
   IconButton.qml         栏里的图标按钮（可挂弹出面板）
@@ -66,6 +72,9 @@ ui/                      样式原语 —— 唯一读 Style 的层
   WallpaperView.qml      壁纸显示 + 像素扩散转场
   shaders/spread.frag    转场着色器（.qsb 由 tools/build-shaders.sh 编译）
   Dot.qml                纯装饰色块：圆点 / 色条 / 分隔线
+  PetalShape.qml         参数化的花瓣 / 曲奇形状（Material 3 Expressive 的圆形变体）
+  BlobShape.qml          一圈圆并成一坨，相邻的互相叠住
+  Starfield.qml          星空 + 星云：一整块 Canvas，只在尺寸变化时重绘
   Surface.qml            圆角/描边/透明度/阴影/交互
   StyledText.qml         role（label|body|title）+ tone（normal|dim|accent|…）
   StyledIcon.qml         Nerd Font 字形 或 图标主题
@@ -80,6 +89,8 @@ services/                系统数据，零视觉
   Mpris.qml              MPRIS 播放器，多个时挑正在放的那个
   Weather.qml            Open-Meteo，城市名由使用方喂进来
   Backlight.qml          屏幕亮度：读 sysfs，写走 logind
+  Notif.qml              通知服务端 + 历史（最多 50 条）
+  Windows.qml            合成器里开着的 toplevel；和 Apps 分工：装了什么 vs 开着什么
 modules/                 功能组件：只用 ui/ + services/，零字面视觉值
   Workspaces.qml         动态工作区：有窗口 / 正在显示 / urgent 的才列出
   ActiveWindow.qml  Clock.qml
@@ -90,12 +101,18 @@ modules/                 功能组件：只用 ui/ + services/，零字面视觉
   NotificationToast.qml  单条通知卡片
   SettingsPanel.qml      设置：首页磁贴 + 四个二级页，栏上唯一入口
   Launcher.qml           启动器面板：一个输入框，应用 / 窗口两种来源
+  RingLauncher.qml       环形启动器面板：和上面共用 LauncherState，另一种形态
+  RingItem.qml           环上的一格：只管「我是第几度、我画什么」
   WallpaperGrid.qml      壁纸缩略图网格（设置面板的一页）
   DesktopWidgets.qml [S] 桌面组件目录：key → 标签 / 图标 / Component
   CalendarCard.qml       日历
   WeatherCard.qml        实况 + 当日高低温 + 未来 4 小时
   MediaCard.qml          正在播放：封面 / 标题 / 上下首 / 进度
   AlbumCard.qml          壁纸相册：当前壁纸 + 下一张
+  LockScene.qml          锁屏画面编排：什么东西摆在哪
+  LockBackdrop.qml       锁屏背景：锁那一刻的截屏糊掉 + 暗罩（stars 时不截屏）
+  LockClock.qml          锁屏时间，精度只到分钟 —— 可能挂一整夜
+  LockInput.qml          密码条：随状态变形的锁 + 「打了几下」
 layouts/
   parts/TopBar.qml       顶栏窗口部件，被 TopBarLayout 和 DockLayout 共用
   TopBarLayout.qml       只有一条顶栏
@@ -106,6 +123,9 @@ overlays/                不随布局切换的全屏层
   DesktopLayer.qml       桌面组件（WlrLayer.Bottom）
   NotificationLayer.qml  右上角通知栈
   LauncherLayer.qml      启动器窗口（Overlay 层 + 独占键盘 + 遮罩）
+  RingLauncherLayer.qml  环形启动器窗口（与上面平行的实现）
+  LockWindow.qml         真·锁屏：WlSessionLock，自己管所有屏幕，不进 Variants
+  LockLayer.qml          锁屏预览层：普通 Overlay，Esc 能退，配 lock.qml 用
 tools/
   check-style.sh         分层 lint
   wallpaper-theme.sh     从壁纸生成 material 主题
@@ -851,10 +871,3 @@ WARN: Could not register notification server, presumably because one is already 
   `/` 窗口模式都按窗口数和焦点落点验过；四个主题各截一张，形态确实不同
 - 启动器的**物理按键**（↑↓ / Enter / Esc）没法在这台机器上自动验 —— 没装 wtype/ydotool，
   验到的是「焦点拿到了 + 按键处理函数接得对」，真按还得人手试一次
-
-## TODO
-
-- [ ] `themes/material.json` + matugen 壁纸取色管线
-- [ ] `layouts/DockLayout.qml`（顶栏 + 底部 Dock）
-- [ ] 通知中心（`Quickshell.Services.Notifications`）
-- [ ] 锁屏（`Quickshell.Wayland.WlSessionLock`）
