@@ -59,9 +59,9 @@ themes/
   gruvbox.json           极简单色：直角、不透明、无动画
   glass.json             macOS 风：贴边方角菜单栏、比例字体、系统蓝 accent
   material.json          壁纸取色：matugen 按当前壁纸重算，见「壁纸取色」一节
-  pastel.json            彩色药丸条：栏底近全透、大号粗体、每个组件一个色
+  pastel.json            彩色药丸条：栏底全透（只剩药丸浮在壁纸上）、大号粗体、每组件一色
 ui/                      样式原语 —— 唯一读 Style 的层
-  IconButton.qml         栏里的图标按钮（可挂弹出面板）
+  IconButton.qml         栏里的图标按钮（可挂弹出面板）；字形或图标二选一，可放大
   StyledPopup.qml        通用弹出面板
   Card.qml               桌面卡片（和弹层同一套壳，但不是弹层）
   MenuRow.qml            菜单式可选行：对勾 + 可选图标 + 文字
@@ -92,6 +92,7 @@ services/                系统数据，零视觉
   Notif.qml              通知服务端 + 历史（最多 50 条）
   Windows.qml            合成器里开着的 toplevel；和 Apps 分工：装了什么 vs 开着什么
 modules/                 功能组件：只用 ui/ + services/，零字面视觉值
+  LauncherButton.qml     栏最左的发行版徽标，点一下开 / 关启动器
   Workspaces.qml         动态工作区：有窗口 / 正在显示 / urgent 的才列出
   ActiveWindow.qml  Clock.qml
   Volume.qml  Battery.qml  Tray.qml
@@ -648,7 +649,39 @@ warp 一样会触发 hover。
 - **`motion.enabled: false`** —— `Style.durNormal` 自动归零，组件里不写 `if`。
 - **`effect.opacity`** 只作用在 `level 2`（弹层），`level 0`（栏底）走单独的
   **`effect.barOpacity`** —— 想让栏"几乎只剩壁纸"又不把通知卡片一起稀释掉。
+  pastel 干脆设成 `0`：栏底彻底消失，只剩一排彩色药丸浮在壁纸上，而弹层
+  仍然是 `opacity` 那档 `0.72`。注意 `0` 要走 `??` 才传得下去（`||` 会把它
+  当成"没填"退回 `effect.opacity`），`core/Style.qml` 的 `barOpacity` 用的正是 `??`。
   栏内组件（level 1）始终不透明，否则选中高亮会被二次稀释成一团糊。
+- **`logo` 段** —— 栏最左那颗徽标画什么：`glyph`（Nerd Font 字形，默认是 Arch 的
+  `nf-linux-archlinux`，跟着 `onSurface` 走，所以是单色的）、`icon`（图标名或绝对路径，
+  非空时顶掉 glyph）、`tone`（空 = 跟随药丸，填 `accent` 可单独染成品牌色）、
+  `size`（0 = 跟随 `font.sizeL`）。药丸底色走 `module.logo`，和其它组件同一个规矩，
+  设成 `transparent` 就只剩徽标本身。换发行版不用改组件 ——
+  `modules/LauncherButton.qml` 只认「点了之后开启动器」。
+
+  `icon` 填**名字**而不是绝对路径：查不到的名字会退回 `glyph`，查不到的路径
+  只会什么都不画 —— 一个留着退路，一个开天窗。四个主题里 pastel 用的就是
+  `"icon": "archlinux-logo"`（官方那枚蓝色 SVG，`/usr/share/pixmaps` 归
+  `filesystem` 包，Arch 上一定有），另外三个保持单色字形。
+
+  另外三个 token 管它**占多大、站哪**：`padding`（左右内边距）、`inset`
+  （距栏左沿多远）、`gap`（和右边工作区那组的间距），都是 `-1` = 跟随
+  `space.xs` / `space.barPadding` / `space.s`。拆出来是因为栏上通用的那套
+  间距是给一行状态药丸用的，套在徽标身上就显得空旷 —— 它是钉在角上的标记，
+  该比别人更贴边。四个主题各按自己的尺度填：
+
+  ```
+            徽标                    内边距 / 距左沿 / 间距
+  gruvbox   glyph 奶白 #ebdbb2          4  /  6  /  4
+  glass     glyph 纯白单色              4  /  6  /  6   ← 像 macOS 那样钉在左上角
+  material  glyph 跟随 onSurface        5  / 10  /  6   ← 栏是悬浮圆角的，给圆弧让开
+  pastel    icon  官方蓝色 SVG，20px     5  /  8  /  6
+  ```
+
+  徽标在 `layouts/parts/TopBar.qml` 里不进 `leftGroup` 那条 `RowLayout`，
+  自己锚左沿 —— 一条 RowLayout 只有一个 `spacing`，想让「徽标↔工作区」比
+  「工作区↔窗口标题」更紧，就不能和它们挤在同一条里。
 - **`module` 色组** —— 每个组件自己的药丸底色（`clock` / `network` / `cpu` / …），
   外加 `module.on` 作为这些药丸上的文字色。
   **不写就是透明**，`module.on` 留空则继承 `onSurface` ——

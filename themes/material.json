@@ -54,6 +54,11 @@
     "opacity": 0.96,
     "hint": true
   },
+  "logo": {
+    "padding": 5,
+    "inset": 10,
+    "gap": 6
+  },
   "motion": {
     "enabled": true,
     "fast": 130,

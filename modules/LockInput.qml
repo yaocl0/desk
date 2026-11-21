@@ -146,7 +146,7 @@ Item {
         StyledText {
             anchors.centerIn: parent
             visible: !root.typing && !LockState.checking
-            text: root.failed ? LockState.message : LockState.unlocking ? "已解锁" : "输入密码"
+            text: root.failed ? LockState.message : LockState.unlocking ? "天门已开" : "吾有一令，可开天门"
             tone: root.failed ? "error" : "dim"
             font.pixelSize: Style.font.sizeM
         }

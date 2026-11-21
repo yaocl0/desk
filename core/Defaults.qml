@@ -36,6 +36,7 @@ Singleton {
             // module.on 是这些药丸上的文字色。
             module: {
                 on: "",            // 空 = 继承 color.onSurface
+                logo: "transparent",
                 window: "transparent",
                 clock: "transparent",
                 network: "transparent",
@@ -97,6 +98,24 @@ Singleton {
                 // 同一个 0.7，在壁纸上是玻璃，在一屏代码上就是看不清。
                 opacity: -1,
                 hint: true          // 底部快捷键提示条
+            },
+            // 栏最左那颗徽标。默认是 Arch 的 Nerd Font 字形 ——
+            // 换个发行版、或者换成一张彩色 SVG，都只改这一段，组件树不动。
+            logo: {
+                glyph: "",      // Nerd Font 字形（nf-linux-archlinux）
+                icon: "",           // 图标名或绝对路径，非空时优先于 glyph。
+                                    // 要彩色官方徽标就填名字 "archlinux-logo"
+                                    // （/usr/share/pixmaps 归 filesystem 包，Arch 上一定有）——
+                                    // 写名字而不是绝对路径是为了换机器时不至于开天窗：
+                                    // 查不到的名字会退回 glyph，查不到的路径只会什么都不画。
+                tone: "",           // 空 = 跟随药丸底色；填 accent 等可单独染成品牌色
+                size: 0,            // 0 = 跟随 font.sizeL（比栏上其它图标大一点才像个标志）
+                // 下面三个管「占多大、站哪」。徽标不是又一颗状态药丸，它是钉在
+                // 角上的一个标记 —— 栏上通用的那套内边距套在它身上就显得空旷，
+                // 所以单独给三个口子，每个主题按自己的尺度填。
+                padding: -1,        // 左右内边距；-1 = 跟随 space.xs
+                inset: -1,          // 距栏左沿多远；-1 = 跟随 space.barPadding
+                gap: -1             // 和右边工作区那组的间距；-1 = 跟随 space.s
             },
             motion: {
                 enabled: false,

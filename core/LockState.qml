@@ -210,14 +210,14 @@ Singleton {
                 return;
             }
             root.failed = true;
-            root.message = result === PamResult.MaxTries ? "尝试次数过多" : result === PamResult.Error ? "认证出错" : "密码不对";
+            root.message = result === PamResult.MaxTries ? "叩门太急，天门已闭" : result === PamResult.Error ? "天机紊乱，稍候再叩" : "道行尚浅，莫入此门";
             root.failedAttempt();
         }
 
         onError: {
             root.secret = "";
             root.failed = true;
-            root.message = "认证出错";
+            root.message = "天机紊乱，稍候再叩";
             root.failedAttempt();
         }
     }

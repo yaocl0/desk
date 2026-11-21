@@ -34,20 +34,38 @@ PanelWindow {
         level: 0
         radius: Style.barRadius
 
+        // ── 左：徽标 ──────────────────────────────────────
+        // 不进 leftGroup：那条 RowLayout 的 spacing 是栏上通用的那档，
+        // 而徽标要比它更贴边、和右边挨得更紧（见 Style.logoInset / logoGap）。
+        // 单拎出来各锚各的，两边互不牵扯。
+        LauncherButton {
+            id: logo
+
+            anchors.left: parent.left
+            anchors.leftMargin: Style.logoInset
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
         // ── 左：工作区 + 当前窗口 ──────────────────────────
         RowLayout {
             id: leftGroup
 
-            anchors.left: parent.left
-            anchors.leftMargin: Style.space.barPadding
+            anchors.left: logo.right
+            anchors.leftMargin: Style.logoGap
             anchors.verticalCenter: parent.verticalCenter
             spacing: Style.space.s
 
-            Workspaces {}
+            Workspaces {
+                id: workspaces
+            }
 
             ActiveWindow {
-                // 不许顶到居中的时钟上
-                maxWidth: Math.max(0, (win.width / 2) - clock.width / 2 - leftGroup.x - Style.space.l * 2)
+                // 不许顶到居中的时钟上：从这组的左沿量到时钟左沿，再把工作区
+                // 占掉的那一截减掉 —— 工作区开着几个就有多宽，不是定值。
+                // 徽标不用再减：leftGroup.x 已经是从它右边起算的了。
+                // 读 implicitWidth 不读 width 是为了不跟布局自己较劲：
+                // width 是布局算出来的，回头又喂给布局就成环了。
+                maxWidth: Math.max(0, (win.width / 2) - clock.width / 2 - leftGroup.x - workspaces.implicitWidth - leftGroup.spacing - Style.space.l)
             }
         }
 

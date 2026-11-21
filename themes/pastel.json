@@ -19,6 +19,7 @@
     },
     "module": {
         "on": "#101c28",
+        "logo": "transparent",
         "window": "#afdeff",
         "clock": "#d9f3f1",
         "network": "#93eaf4",
@@ -68,6 +69,13 @@
         "opacity": 0.96,
         "hint": true
     },
+    "logo": {
+        "icon": "archlinux-logo",
+        "size": 20,
+        "padding": 5,
+        "inset": 8,
+        "gap": 6
+    },
     "motion": {
         "enabled": true,
         "fast": 110,
@@ -77,7 +85,7 @@
     },
     "effect": {
         "opacity": 0.72,
-        "barOpacity": 0.25,
+        "barOpacity": 0,
         "elevation": 2,
         "wallpaperCell": 4,
         "wallpaperGlow": 0.9,

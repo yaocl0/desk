@@ -15,6 +15,7 @@ Singleton {
     readonly property var space: root.tokens.space
     readonly property var font: root.tokens.font
     readonly property var launcher: root.tokens.launcher
+    readonly property var logo: root.tokens.logo
     readonly property var motion: root.tokens.motion
     readonly property var effect: root.tokens.effect
 
@@ -78,6 +79,37 @@ Singleton {
     readonly property color hoverOn: {
         const c = root.color?.onHover;
         return (c === undefined || c === "") ? (root.color?.onSurface ?? "#d0d0d0") : c;
+    }
+
+    // 栏最左那颗徽标画什么。主题的 logo 段说「画什么、多大、什么色调」，
+    // modules/LauncherButton 只管「点了之后开启动器」—— 于是换发行版、
+    // 换成彩色 SVG、或者把它染成品牌色，都不用碰组件。
+    readonly property string logoGlyph: root.logo?.glyph ?? ""
+    readonly property string logoIcon: root.logo?.icon ?? ""
+
+    // 空 = 跟着药丸走（module.logo 上的文字色，和其它组件一个规矩）。
+    // 想让徽标在一水儿的 onSurface 里单独跳出来，就填个 tone 名
+    // （accent / success / …，全表见 ui/StyledText）。
+    readonly property string logoTone: root.logo?.tone || "onModule"
+
+    // 0 = 跟随 font.sizeL。徽标比栏上其它图标大一档才像个标志，
+    // 而不是「又一个状态图标」。
+    readonly property int logoSize: (root.logo?.size ?? 0) > 0 ? root.logo.size : (root.font?.sizeL ?? 16)
+
+    // 徽标的占位：内边距 / 距栏左沿 / 和右边那组的间距。
+    // 三个都是 -1 = 跟随栏上通用的那档间距（也就是不特殊对待）。
+    // 拆出来是因为徽标比别的组件更该贴边：它是个角标，不是一行状态里的一项。
+    readonly property int logoPadding: {
+        const v = root.logo?.padding ?? -1;
+        return v < 0 ? (root.space?.xs ?? 4) : v;
+    }
+    readonly property int logoInset: {
+        const v = root.logo?.inset ?? -1;
+        return v < 0 ? (root.space?.barPadding ?? 12) : v;
+    }
+    readonly property int logoGap: {
+        const v = root.logo?.gap ?? -1;
+        return v < 0 ? (root.space?.s ?? 6) : v;
     }
 
     // 组件自己的药丸底色。主题没给就退回 surfaceAlt，

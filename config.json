@@ -10,10 +10,11 @@
     ],
     "launcher": "ring",
     "launcherUsage": {
-        "CC Switch": 1,
+        "CC Switch": 2,
         "com.alibabainc.dingtalk": 1,
         "google-chrome": 9,
         "kitty": 6,
+        "org.kde.dolphin": 1,
         "ranger": 1
     },
     "layout": "topbar",
