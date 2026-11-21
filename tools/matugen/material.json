@@ -1,0 +1,71 @@
+{
+  "color": {
+    "background": "{{colors.surface.default.hex}}",
+    "surface": "{{colors.surface_container.default.hex}}",
+    "surfaceAlt": "{{colors.surface_container_high.default.hex}}",
+    "onBackground": "{{colors.on_surface.default.hex}}",
+    "onSurface": "{{colors.on_surface.default.hex}}",
+    "onSurfaceDim": "{{colors.on_surface_variant.default.hex}}",
+    "accent": "{{colors.primary.default.hex}}",
+    "onAccent": "{{colors.on_primary.default.hex}}",
+    "selected": "{{colors.primary.default.hex}}",
+    "onSelected": "{{colors.on_primary.default.hex}}",
+    "hover": "{{colors.surface_container_highest.default.hex}}",
+    "success": "{{colors.tertiary.default.hex}}",
+    "warning": "{{colors.secondary.default.hex}}",
+    "error": "{{colors.error.default.hex}}",
+    "outline": "{{colors.outline_variant.default.hex}}"
+  },
+  "shape": {
+    "radiusS": 8,
+    "radiusM": 16,
+    "radiusL": 24,
+    "radiusFull": 999,
+    "borderWidth": 0
+  },
+  "space": {
+    "xs": 5,
+    "s": 9,
+    "m": 16,
+    "l": 24,
+    "barHeight": 38,
+    "barMargin": 10,
+    "barPadding": 18,
+    "popupWidth": 360
+  },
+  "font": {
+    "family": "JetBrainsMono Nerd Font",
+    "sizeS": 12,
+    "sizeM": 13,
+    "sizeL": 18,
+    "weight": 500,
+    "letterSpacing": 0.2
+  },
+  "launcher": {
+    "width": 600,
+    "align": "center",
+    "offsetY": -40,
+    "inputHeight": 56,
+    "rowHeight": 56,
+    "rows": 6,
+    "iconSize": 32,
+    "subtitle": true,
+    "scrim": 0.32,
+    "opacity": 0.96,
+    "hint": true
+  },
+  "motion": {
+    "enabled": true,
+    "fast": 130,
+    "normal": 260,
+    "easing": "outBack",
+    "wallpaper": 3000
+  },
+  "effect": {
+    "opacity": 0.75,
+    "elevation": 3,
+    "wallpaperCell": 5,
+    "wallpaperGlow": 1.0,
+    "wallpaperSeeds": 12
+  }
+}

@@ -1,0 +1,13 @@
+# matugen 配置模板。
+#
+# matugen 4.x 不接受相对路径（会报 "Failed to get the input and output paths
+# from hashmap"），所以这里用 @ROOT@ 占位，由 tools/wallpaper-theme.sh 在运行时
+# 替换成仓库绝对路径、写到临时文件再传给 matugen。
+#
+# 想顺带生成别的配色产物（kitty / btop / fuzzel …），在下面照样加一节就行。
+
+[config]
+
+[templates.desk]
+input_path = '@ROOT@/tools/matugen/material.json'
+output_path = '@ROOT@/themes/material.json'

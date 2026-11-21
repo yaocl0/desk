@@ -1,0 +1,2 @@
+# 本机权限白名单，含绝对路径，不跟着仓库走
+.claude/settings.local.json

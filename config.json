@@ -1,0 +1,28 @@
+{
+    "autoTheme": true,
+    "desktopWidgets": [
+        {
+            "key": "weather",
+            "w": 0,
+            "x": 20,
+            "y": 42
+        }
+    ],
+    "launcher": "ring",
+    "launcherUsage": {
+        "CC Switch": 1,
+        "com.alibabainc.dingtalk": 1,
+        "google-chrome": 7,
+        "kitty": 6,
+        "ranger": 1
+    },
+    "layout": "topbar",
+    "lockBackground": "blur",
+    "theme": "pastel",
+    "wallpaper": "/home/yao/Pictures/1.jpg",
+    "wallpaperAuto": false,
+    "wallpaperDir": "",
+    "wallpaperInterval": 30,
+    "weatherCity": "杭州",
+    "weatherInterval": 15
+}

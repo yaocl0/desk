@@ -1,0 +1,80 @@
+{
+  "_source": "配色取自 github.com/kelian-4/lickintosh (macOS Tahoe for Quickshell) 的 liquid glass 变体",
+  "color": {
+    "background": "#0d0d0d",
+    "surface": "#2c2c2e",
+    "surfaceAlt": "transparent",
+    "onBackground": "#ffffff",
+    "onSurface": "#ffffff",
+    "onSurfaceDim": "#a0ffffff",
+    "accent": "#1c7aff",
+    "onAccent": "#ffffff",
+    "selected": "#1c7aff",
+    "onSelected": "#ffffff",
+    "hover": "#26ffffff",
+    "success": "#30d158",
+    "warning": "#ff9f0a",
+    "error": "#ff453a",
+    "outline": "#20ffffff"
+  },
+  "shape": {
+    "radiusS": 5,
+    "radiusM": 8,
+    "radiusL": 12,
+    "radiusFull": 0,
+    "borderWidth": 1,
+    "barRadius": 0
+  },
+  "space": {
+    "xs": 4,
+    "s": 8,
+    "m": 12,
+    "l": 18,
+    "barHeight": 30,
+    "barMargin": 0,
+    "barPadding": 14,
+    "popupWidth": 340
+  },
+  "font": {
+    "family": [
+      "Inter",
+      "SF Pro Text",
+      "SF Pro Display",
+      "Noto Sans CJK SC",
+      "JetBrainsMono Nerd Font"
+    ],
+    "sizeS": 11,
+    "sizeM": 13,
+    "sizeL": 16,
+    "weight": 500,
+    "letterSpacing": 0
+  },
+  "launcher": {
+    "width": 560,
+    "align": "center",
+    "offsetY": -60,
+    "inputHeight": 48,
+    "rowHeight": 40,
+    "rows": 7,
+    "iconSize": 24,
+    "subtitle": true,
+    "scrim": 0.25,
+    "opacity": 0.95,
+    "hint": true
+  },
+  "motion": {
+    "enabled": true,
+    "fast": 120,
+    "normal": 220,
+    "easing": "outCubic",
+    "wallpaper": 2000
+  },
+  "effect": {
+    "opacity": 0.7,
+    "barOpacity": 0.45,
+    "elevation": 2,
+    "wallpaperCell": 2,
+    "wallpaperGlow": 0.5,
+    "wallpaperSeeds": 8
+  }
+}

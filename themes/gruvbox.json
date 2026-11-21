@@ -1,0 +1,68 @@
+{
+  "color": {
+    "background": "#1d2021",
+    "surface": "#282828",
+    "surfaceAlt": "transparent",
+    "onBackground": "#ebdbb2",
+    "onSurface": "#ebdbb2",
+    "onSurfaceDim": "#665c54",
+    "accent": "#d79921",
+    "onAccent": "#1d2021",
+    "selected": "transparent",
+    "onSelected": "#d79921",
+    "hover": "#3c3836",
+    "success": "#b8bb26",
+    "warning": "#fe8019",
+    "error": "#fb4934",
+    "outline": "#504945"
+  },
+  "shape": {
+    "radiusS": 0,
+    "radiusM": 0,
+    "radiusL": 0,
+    "radiusFull": 0,
+    "borderWidth": 0
+  },
+  "space": {
+    "xs": 4,
+    "s": 6,
+    "m": 12,
+    "l": 20,
+    "barHeight": 28,
+    "barMargin": 0,
+    "barPadding": 12,
+    "popupWidth": 320
+  },
+  "font": {
+    "family": "JetBrainsMono Nerd Font",
+    "sizeS": 11,
+    "sizeM": 12,
+    "sizeL": 16,
+    "weight": 400,
+    "letterSpacing": 0
+  },
+  "launcher": {
+    "width": 0,
+    "align": "top",
+    "offsetY": 0,
+    "inputHeight": 28,
+    "rowHeight": 24,
+    "rows": 12,
+    "iconSize": 0,
+    "subtitle": false,
+    "scrim": 0,
+    "opacity": 1.0,
+    "hint": false
+  },
+  "motion": {
+    "enabled": false,
+    "wallpaper": 1200
+  },
+  "effect": {
+    "opacity": 1.0,
+    "elevation": 0,
+    "wallpaperCell": 1,
+    "wallpaperGlow": 0.35,
+    "wallpaperSeeds": 5
+  }
+}

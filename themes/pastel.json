@@ -1,0 +1,86 @@
+{
+    "color": {
+        "background": "#090e12",
+        "surface": "#192028",
+        "surfaceAlt": "#14ffffff",
+        "onBackground": "#e5ecf3",
+        "onSurface": "#e5ecf3",
+        "onSurfaceDim": "#9199a2",
+        "accent": "#93eaf4",
+        "onAccent": "#101c28",
+        "selected": "#f7d499",
+        "onSelected": "#101c28",
+        "hover": "#f0f6fc",
+        "onHover": "#101c28",
+        "success": "#b1eabc",
+        "warning": "#f7d499",
+        "error": "#ff8881",
+        "outline": "#323940"
+    },
+    "module": {
+        "on": "#101c28",
+        "window": "#afdeff",
+        "clock": "#d9f3f1",
+        "network": "#93eaf4",
+        "volume": "#ddcfff",
+        "cpu": "#ffc2dc",
+        "memory": "#f7d499",
+        "battery": "#b1eabc",
+        "alert": "#ff8881",
+        "tray": "transparent",
+        "pickerSettings": "#a0d7e0"
+    },
+    "shape": {
+        "radiusS": 8,
+        "radiusM": 14,
+        "radiusL": 20,
+        "radiusFull": 999,
+        "borderWidth": 0
+    },
+    "space": {
+        "xs": 5,
+        "s": 10,
+        "m": 15,
+        "l": 22,
+        "barHeight": 40,
+        "barMargin": 0,
+        "barPadding": 14,
+        "popupWidth": 380
+    },
+    "font": {
+        "family": "JetBrainsMono Nerd Font",
+        "sizeS": 13,
+        "sizeM": 15,
+        "sizeL": 19,
+        "weight": 700,
+        "letterSpacing": 0
+    },
+    "launcher": {
+        "width": 620,
+        "align": "center",
+        "offsetY": -40,
+        "inputHeight": 54,
+        "rowHeight": 52,
+        "rows": 7,
+        "iconSize": 30,
+        "subtitle": true,
+        "scrim": 0.35,
+        "opacity": 0.96,
+        "hint": true
+    },
+    "motion": {
+        "enabled": true,
+        "fast": 110,
+        "normal": 200,
+        "easing": "outCubic",
+        "wallpaper": 2400
+    },
+    "effect": {
+        "opacity": 0.72,
+        "barOpacity": 0.25,
+        "elevation": 2,
+        "wallpaperCell": 4,
+        "wallpaperGlow": 0.9,
+        "wallpaperSeeds": 10
+    }
+}
