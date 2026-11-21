@@ -328,13 +328,14 @@ Item {
         rotation: -90 - (1 - root.decel(petal.t)) * 120
         scale: Math.max(0, root.back(petal.t))
 
-        // 主题的 surface 掺一点 accent —— 纯 surface 太像「一块灰片」，
-        // 掺满又会变成一坨色。0.28 大概是「看得出有颜色，但仍然是个面板」。
-        //
-        // 不透明度给到 0.92：它盖的是任意窗口（多半是一屏亮文字），
-        // 不像栏和弹层那样底下只有壁纸。Nebula 那边敢用 0.45 是因为它
-        // 还压了一层合成器模糊，这里默认没有。
-        color: Style.alpha(Qt.tint(Style.color.surface, Qt.alpha(Style.color.accent, 0.28)), 0.92)
+        // 和列表启动器同一块底色。两个启动器是同一件事的两种形态，
+        // 底色不一样会让人以为是两个程序 —— 所以这里照搬 Surface(level 2)
+        // 的算法：surface 配 launcher.opacity，后者 <0 时退回 effect.opacity。
+        // （启动器单独拆出不透明度，是因为它盖的是任意窗口，不像栏和弹层
+        // 那样底下只有壁纸，见 Defaults 里那段注释。）
+        readonly property real surfaceOpacity: (Style.launcher.opacity ?? -1) >= 0 ? Style.launcher.opacity : Style.effect.opacity
+
+        color: Style.alpha(Style.color.surface, petal.surfaceOpacity)
         topLight: 0.12
         strokeColor: Style.alpha(Style.color.onSurface, 0.14)
         strokeWidth: 1
