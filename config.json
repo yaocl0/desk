@@ -12,14 +12,14 @@
     "launcherUsage": {
         "CC Switch": 1,
         "com.alibabainc.dingtalk": 1,
-        "google-chrome": 7,
+        "google-chrome": 9,
         "kitty": 6,
         "ranger": 1
     },
     "layout": "topbar",
     "lockBackground": "blur",
     "theme": "pastel",
-    "wallpaper": "/home/yao/Pictures/1.jpg",
+    "wallpaper": "/home/yao/Pictures/6.jpg",
     "wallpaperAuto": false,
     "wallpaperDir": "",
     "wallpaperInterval": 30,
